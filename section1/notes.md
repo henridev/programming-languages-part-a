@@ -11,3 +11,12 @@ comment: `(* text *)`
 end session in REPL: `Ctrl+d`
 
 restart session: `Ctrl+c and Ctrl+s`
+
+<img src="C:\Users\henri\AppData\Roaming\Typora\typora-user-images\image-20200603113613177.png" alt="image-20200603113613177" style="zoom:67%;" />
+
+Recursion 
+
+<img src="https://miro.medium.com/max/5988/1*bUnC1CXBqOx82IUdxRF2WA.jpeg"/>
+
+
+
