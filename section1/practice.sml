@@ -124,3 +124,79 @@ fun zipRecycle(l1: int list, l2: int list) =
   end;
 
 zipRecycle ([1,2,3], [1, 2, 3, 4, 5, 6, 7]);
+
+
+fun zipOpt(l1: int list, l2: int list) =
+  let 
+    fun getLength(aList: int list) = 
+        if null aList then 0
+        else 1 + getLength(tl aList)
+    val listLength = (getLength(l1), getLength(l2))
+    fun zip(l1: int list, l2: int list) =
+      if null l1 orelse null l2 then []
+      else (hd l1, hd l2)::zip(tl l1, tl l2)
+  in
+    if (#1 listLength <> #2 listLength) then NONE 
+    else SOME(zip(l1, l2))
+  end;
+
+zipOpt ([1,2,3], [4,6,3]);
+
+fun lookup (l: (string*int) list, s: string) = 
+  if null l then NONE
+  else if (#1 (hd l)) = s then SOME (#2 (hd l)) else lookup (tl l, s);
+
+lookup ([("a",1),("h",2),("a",3)], "h");
+
+fun isSorted(l: int list) =
+   if null (tl l) then true
+   else if ((hd l) > (hd (tl l))) then false 
+   else isSorted(tl l);
+
+
+isSorted [1, 2, 3, 6, 5] ;
+
+fun reverse (l: int list) =
+  if null (tl l) then [hd l]
+  else reverse(tl l) @ [hd l];
+
+reverse [1, 2, 3, 6, 5] ;
+
+fun isAnySorted(l: int list) =
+    let fun reverse (l: int list) =
+        if null (tl l) then [hd l]
+        else reverse(tl l) @ [hd l];
+    in 
+    isSorted(l) orelse isSorted(reverse l)
+    end;
+
+isAnySorted[6, 5, 4, 2, 1];
+
+fun sortedMerge (l1: int list, l2: int list) =
+  if null l1
+  then l2
+  else if null l2
+  then l1
+  else if hd l1 <= hd l2
+  then hd l1 :: sortedMerge(tl l1, l2)
+  else hd l2 :: sortedMerge(l1, tl l2);
+sortedMerge([1, 2, 3, 6, 5], [3]);
+
+
+
+fun recursiveBsort(l1: int list, l2: int list) =
+  let 
+     val merged = l1 @ l2
+     fun sortSmallest(merged: int list) =
+          if null merged then []
+          else if null (tl merged) then [hd merged]
+          else if (hd merged) > (hd (tl merged)) 
+               then (hd (tl merged))::(sortSmallest((hd merged)::(tl (tl merged))))
+               else (hd merged)::(sortSmallest((hd (tl merged))::(tl (tl merged))))
+    fun sub(merged: int list) = if null merged then []
+                                else sortSmallest((hd merged)::(sub((tl merged))))
+  in
+      sub(merged)
+  end;
+
+recursiveBsort([6, 5, 4, 2, 1, 9], [3, 10]);
